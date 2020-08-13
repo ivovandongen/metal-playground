@@ -1,6 +1,13 @@
 #include <glfm.h>
 
 #include <iostream>
+#include <memory>
+
+#include "simple_renderer.h"
+
+namespace {
+std::unique_ptr<metal::SimpleRenderer> renderer;
+}
 
 void glfmMain(GLFMDisplay *display) {
     glfmSetDisplayConfig(display, GLFMRenderingAPIMetal, GLFMColorFormatRGBA8888, GLFMDepthFormat16, GLFMStencilFormat8,
@@ -23,7 +30,16 @@ void glfmMain(GLFMDisplay *display) {
                     return "Metal";
             }
         }() << std::endl;
+
+        renderer = std::make_unique<metal::SimpleRenderer>(d);
     });
 
-    glfmSetSurfaceDestroyedFunc(display, [](GLFMDisplay *) { std::cout << "Surface destroyed" << std::endl; });
+    glfmSetMainLoopFunc(display, [](GLFMDisplay *d, double frameTime) {
+        renderer->render(d, frameTime);
+    });
+
+    glfmSetSurfaceDestroyedFunc(display, [](GLFMDisplay *) {
+        std::cout << "Surface destroyed" << std::endl;
+        renderer.reset();
+    });
 }

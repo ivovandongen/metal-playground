@@ -10,6 +10,7 @@ macro(_ios_target_defaults TARGET_NAME)
             XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "9.0"
             XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH $<$<CONFIG:Debug>:YES>
     )
+    target_compile_options(${TARGET_NAME} PRIVATE "-fobjc-arc")
 endmacro()
 
 macro(target_defaults TARGET_NAME)
