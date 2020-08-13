@@ -1,5 +1,12 @@
 BasedOnStyle: Google
+---
 Language: Cpp
+IndentWidth: 4
+AccessModifierOffset: -4
+AllowShortFunctionsOnASingleLine: Inline
+ColumnLimit: 120
+---
+Language: ObjC
 IndentWidth: 4
 AccessModifierOffset: -4
 AllowShortFunctionsOnASingleLine: Inline
